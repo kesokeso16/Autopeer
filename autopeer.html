@@ -120,6 +120,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   max-width: 100%;
 }
 
+
 #zoom-popup {
   position: fixed;
   top: 0; left: 0;
@@ -138,6 +139,28 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 }
 
 
+.zoomable-img {
+  cursor: pointer;
+  transition: transform 0.2s;
+  max-width: 100%;
+}
+
+#zoom-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  overflow: auto;
+  z-index: 9999;
+  padding: 40px;
+}
+
+#zoom-popup img {
+  display: block;
+  margin: 40px auto;
+  max-width: none; /* 原寸表示 */
+}
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on('click', 'a.link-internal', function (event) {
 	const $box = $('#content-box');
 	const clicked = $(this);
@@ -256,6 +279,21 @@ function showZoom(src) {
 &lt;/script&gt;
 
 &lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
+
+
+&lt;script&gt;
+function showZoomMulti(sources) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.onclick = () =&gt; document.body.removeChild(popup);
+  popup.innerHTML = sources.map(src =&gt; `&lt;img src=&quot;${src}&quot;&gt;`).join(&#39;&#39;);
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;!-- ↓表示されてる小さな画像（サムネ） --&gt;
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
+     onclick=&#39;showZoomMulti([&quot;NEUNOARTICL_page-0001.jpg&quot;, &quot;NEUNOARTICL_page-0002.jpg&quot;])&#39;&gt;
 </tw-passagedata><tw-passagedata pid="3" name="briefing" tags="" position="225,200" size="100,100">:: Start
 &lt;!-- 初期化 --&gt;
 &lt;&lt;set _step = 0&gt;&gt;
@@ -287,6 +325,14 @@ function showZoom(src) {
 	&lt;&lt;/switch&gt;&gt;
 &lt;&lt;/button&gt;&gt;
 &lt;/div&gt;
+
+&lt;&lt;set $C = 100&gt;&gt;
+&lt;&lt;set $r = 1.00&gt;&gt;
+&lt;&lt;set $K = 90&gt;&gt;
+&lt;&lt;set $A = 20&gt;&gt;
+&lt;&lt;set $E = 0&gt;&gt;
+&lt;&lt;set $AIS = 0&gt;&gt;
+
 </tw-passagedata><tw-passagedata pid="4" name="練習用" tags="" position="100,425" size="100,100">:: week01log
 
 &lt;&lt;switch $judge&gt;&gt;
@@ -356,11 +402,7 @@ AIレコメンド：「構造水とは何か」「言語刺激と分子構造」
 技術成長率（r）：$r  
 モラル基準（A）：$A  
 &lt;/div&gt;
-</tw-passagedata><tw-passagedata pid="5" name="week01dec" tags="" position="475,200" size="100,100">&lt;&lt;set $C to 50&gt;&gt;  &lt;!-- 文明スコア初期化 --&gt;
-&lt;&lt;set $r to 5&gt;&gt;    &lt;!-- 技術成長率 --&gt;
-&lt;&lt;set $A to 20&gt;&gt;   &lt;!-- モラル基準 --&gt;
-
-どの判定を下しますか？
+</tw-passagedata><tw-passagedata pid="5" name="week01dec" tags="" position="475,200" size="100,100">どの判定を下しますか？
 
 &lt;&lt;button &quot;✔ アクセプト&quot;&gt;&gt;
   &lt;&lt;set $judge = &quot;accept&quot;&gt;&gt;
