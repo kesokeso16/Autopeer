@@ -141,6 +141,15 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   max-width: none;  /* 原寸サイズで表示させる */
   box-shadow: 0 0 20px #fff;
 }
+
+ズーム機能
+#zoom-popup {
+  overflow: scroll;
+}
+#zoom-popup img {
+  transform: scale(2); /* 2倍に拡大 */
+  transform-origin: top center;
+}
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on('click', 'a.link-internal', function (event) {
 	const $box = $('#content-box');
 	const clicked = $(this);
