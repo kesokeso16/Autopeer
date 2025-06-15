@@ -114,6 +114,30 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 }
 
 
+.zoomable-img {
+  cursor: pointer;
+  transition: transform 0.2s;
+  max-width: 100%;
+}
+
+#zoom-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#zoom-popup img {
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 20px #fff;
+}
+
+
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on('click', 'a.link-internal', function (event) {
 	const $box = $('#content-box');
 	const clicked = $(this);
@@ -220,6 +244,18 @@ Autopeer&lt;br&gt;
 &lt;span id=&quot;summary3&quot;&gt;&lt;/span&gt;
 
 [[判定へ|week01dec]]
+
+
+&lt;script&gt;
+function showZoom(src) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.innerHTML = &quot;&lt;img src=&#39;&quot; + src + &quot;&#39; onclick=&#39;document.body.removeChild(this.parentNode)&#39; /&gt;&quot;;
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
 </tw-passagedata><tw-passagedata pid="3" name="briefing" tags="" position="225,200" size="100,100">:: Start
 &lt;!-- 初期化 --&gt;
 &lt;&lt;set _step = 0&gt;&gt;
@@ -478,6 +514,17 @@ AIレコメンド：「構造水とは何か」「言語刺激と分子構造」
 &lt;img src=&quot;https://i.ibb.co/xyz123/ronbun001.jpg&quot; width=&quot;600&quot; alt=&quot;論文画像&quot;&gt;
 &lt;img src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot;&gt;
 &lt;img src=&quot;NEUNOARTICL_page-0002.jpg&quot; width=&quot;600&quot;&gt;
+
+&lt;script&gt;
+function showZoom(src) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.innerHTML = &quot;&lt;img src=&#39;&quot; + src + &quot;&#39; onclick=&#39;document.body.removeChild(this.parentNode)&#39; /&gt;&quot;;
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
 </tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
