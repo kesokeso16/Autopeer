@@ -104,7 +104,8 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Autopeer" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="387DF13D-39B6-4316-A5E6-E8C36C68A016" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">#content-box {
+	<tw-storydata name="Autopeer" startnode="3" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="387DF13D-39B6-4316-A5E6-E8C36C68A016" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* ▼ 切り替えテキストのフェード用 */
+#content-box {
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
 }
@@ -114,37 +115,14 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 }
 
 
+/* ▼ 画像クリック→拡大ポップアップ用 */
 .zoomable-img {
   cursor: pointer;
   transition: transform 0.2s;
   max-width: 100%;
 }
 
-
-#zoom-popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-#zoom-popup img {
-  max-width: 90%;
-  max-height: 90%;
-  box-shadow: 0 0 20px #fff;
-}
-
-
-.zoomable-img {
-  cursor: pointer;
-  transition: transform 0.2s;
-  max-width: 100%;
-}
-
+/* ▼ ポップアップ全体 */
 #zoom-popup {
   position: fixed;
   top: 0; left: 0;
@@ -156,10 +134,12 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   padding: 40px;
 }
 
+/* ▼ ポップアップ内の画像 */
 #zoom-popup img {
   display: block;
   margin: 40px auto;
-  max-width: none; /* 原寸表示 */
+  max-width: none;  /* 原寸サイズで表示させる */
+  box-shadow: 0 0 20px #fff;
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on('click', 'a.link-internal', function (event) {
 	const $box = $('#content-box');
@@ -197,16 +177,29 @@ Autopeer&lt;br&gt;
 
 [[進む|briefing]]</tw-passagedata><tw-passagedata pid="2" name="week01check" tags="" position="350,200" size="100,100">🗒️論文001『膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係』
 
-論文の表示タイプ【ボタンを押せばいつでも表示可能】
-&lt;img src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot;&gt;
-&lt;img src=&quot;NEUNOARTICL_page-0002.jpg&quot; width=&quot;600&quot;&gt;
-&lt;&lt;set $text = {&quot;original&quot;: &quot;これは原文の本文です。長文のまま表示されます。研究背景や考察など含まれます。原文：情報量は99％です.「膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係」.著者：S.K. ナナTanaka, Y. et al. (2019). “Visual Perception and Food Satisfaction”, Jpn. J. Marketing Psychol., 12(3), 45–60.&quot;,
-	
-    &quot;summary&quot;: &quot;この研究では、言語刺激が水のpHに与える影響を調べた。ポジティブワードでpHが微妙に変動した。&quot;,
-	
-    &quot;simple&quot;: &quot;「ありがとう」と言った水のpHが変わったっぽい、という話。&quot;,
-	
-    &quot;oneword&quot;: &quot;波動水。&quot;}&gt;&gt;
+&lt;!-- 拡大ポップアップ用スクリプト --&gt;
+&lt;script&gt;
+function showZoomMulti(sources) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.onclick = () =&gt; document.body.removeChild(popup);
+  popup.innerHTML = sources.map(src =&gt; `&lt;img src=&quot;${src}&quot;&gt;`).join(&#39;&#39;);
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;!-- 表示用：小さな画像 --&gt;
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
+     onclick=&#39;showZoomMulti([&quot;NEUNOARTICL_page-0001.jpg&quot;, &quot;NEUNOARTICL_page-0002.jpg&quot;])&#39;&gt;
+
+---
+
+&lt;&lt;set $text = {
+  &quot;original&quot;: &quot;これは原文の本文です。長文のまま表示されます。研究背景や考察など含まれます。原文：情報量は99％です.「膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係」.著者：S.K. ナナTanaka, Y. et al. (2019). “Visual Perception and Food Satisfaction”, Jpn. J. Marketing Psychol., 12(3), 45–60.&quot;,
+  &quot;summary&quot;: &quot;この研究では、言語刺激が水のpHに与える影響を調べた。ポジティブワードでpHが微妙に変動した。&quot;,
+  &quot;simple&quot;: &quot;「ありがとう」と言った水のpHが変わったっぽい、という話。&quot;,
+  &quot;oneword&quot;: &quot;波動水。&quot;
+}&gt;&gt;
 &lt;&lt;set $view = &quot;original&quot;&gt;&gt;
 
 &lt;&lt;link &quot;📄 要約&quot;&gt;&gt;&lt;&lt;set $view = &quot;summary&quot;&gt;&gt;&lt;&lt;replace &quot;#content-box&quot;&gt;&gt;&lt;&lt;print $text[$view]&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
@@ -220,80 +213,42 @@ Autopeer&lt;br&gt;
 	&lt;&lt;print $text[$view]&gt;&gt;
 &lt;/div&gt;
 
-
+---
 
 &lt;&lt;set $toggle1 = false&gt;&gt;
-
 &lt;&lt;link &quot;▶ 判断傾向を表示/非表示&quot;&gt;&gt;
 	&lt;&lt;if $toggle1 is false&gt;&gt;
 		&lt;&lt;replace &quot;#summary2&quot;&gt;&gt;
-			●現在、査読中の査読官：1名（あなただけ）
-
-「まぁ、ポテチ論文だし1人でいいだろう」って思われたっぽいですね。
+●現在、査読中の査読官：1名（あなただけ）  
+「まぁ、ポテチ論文だし1人でいいだろう」って思われたっぽいですね。  
 でもあなたの判断で、食品業界のパッケージが変わるかもしれません。
 		&lt;&lt;/replace&gt;&gt;
 		&lt;&lt;set $toggle1 = true&gt;&gt;
 	&lt;&lt;else&gt;&gt;
-		&lt;&lt;replace &quot;#summary2&quot;&gt;&gt;
-			
-		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;replace &quot;#summary2&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
 		&lt;&lt;set $toggle1 = false&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/link&gt;&gt;
-
 &lt;span id=&quot;summary2&quot;&gt;&lt;/span&gt;
 
-
 &lt;&lt;set $toggle2 = false&gt;&gt;
-
 &lt;&lt;link &quot;▶ AIチェックを表示/非表示&quot;&gt;&gt;
 	&lt;&lt;if $toggle2 is false&gt;&gt;
 		&lt;&lt;replace &quot;#summary3&quot;&gt;&gt;
-			この論文、ポテトチップスで人の心理面やマーケティングを語るという発想には驚かされましたが、実際、高地で膨らんだスナック袋が視覚的に与える“期待値”は無視できません。
+この論文、ポテトチップスで人の心理面やマーケティングを語るという発想には驚かされましたが、実際、高地で膨らんだスナック袋が視覚的に与える“期待値”は無視できません。
 
-“期待空間”という用語も、いわゆる800円カフェの雰囲気料金と近い概念と捉えられます。
-
+“期待空間”という用語も、いわゆる800円カフェの雰囲気料金と近い概念と捉えられます。  
 結局のところ、「空気に価格がつく」時代は、もう到来しているのかもしれません。
 		&lt;&lt;/replace&gt;&gt;
 		&lt;&lt;set $toggle2 = true&gt;&gt;
 	&lt;&lt;else&gt;&gt;
-		&lt;&lt;replace &quot;#summary3&quot;&gt;&gt;
-			
-		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;replace &quot;#summary3&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;
 		&lt;&lt;set $toggle2 = false&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/link&gt;&gt;
-
 &lt;span id=&quot;summary3&quot;&gt;&lt;/span&gt;
 
 [[判定へ|week01dec]]
-
-
-&lt;script&gt;
-function showZoom(src) {
-  let popup = document.createElement(&quot;div&quot;);
-  popup.id = &quot;zoom-popup&quot;;
-  popup.innerHTML = &quot;&lt;img src=&#39;&quot; + src + &quot;&#39; onclick=&#39;document.body.removeChild(this.parentNode)&#39; /&gt;&quot;;
-  document.body.appendChild(popup);
-}
-&lt;/script&gt;
-
-&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
-
-
-&lt;script&gt;
-function showZoomMulti(sources) {
-  let popup = document.createElement(&quot;div&quot;);
-  popup.id = &quot;zoom-popup&quot;;
-  popup.onclick = () =&gt; document.body.removeChild(popup);
-  popup.innerHTML = sources.map(src =&gt; `&lt;img src=&quot;${src}&quot;&gt;`).join(&#39;&#39;);
-  document.body.appendChild(popup);
-}
-&lt;/script&gt;
-
-&lt;!-- ↓表示されてる小さな画像（サムネ） --&gt;
-&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
-     onclick=&#39;showZoomMulti([&quot;NEUNOARTICL_page-0001.jpg&quot;, &quot;NEUNOARTICL_page-0002.jpg&quot;])&#39;&gt;
 </tw-passagedata><tw-passagedata pid="3" name="briefing" tags="" position="225,200" size="100,100">:: Start
 &lt;!-- 初期化 --&gt;
 &lt;&lt;set _step = 0&gt;&gt;
@@ -567,6 +522,105 @@ function showZoom(src) {
 &lt;/script&gt;
 
 &lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
+</tw-passagedata><tw-passagedata pid="9" name="Untitled Passage 1" tags="" position="375,425" size="100,100">🗒️論文001『膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係』
+
+論文の表示タイプ【ボタンを押せばいつでも表示可能】
+&lt;img src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot;&gt;
+&lt;img src=&quot;NEUNOARTICL_page-0002.jpg&quot; width=&quot;600&quot;&gt;
+&lt;&lt;set $text = {&quot;original&quot;: &quot;これは原文の本文です。長文のまま表示されます。研究背景や考察など含まれます。原文：情報量は99％です.「膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係」.著者：S.K. ナナTanaka, Y. et al. (2019). “Visual Perception and Food Satisfaction”, Jpn. J. Marketing Psychol., 12(3), 45–60.&quot;,
+	
+    &quot;summary&quot;: &quot;この研究では、言語刺激が水のpHに与える影響を調べた。ポジティブワードでpHが微妙に変動した。&quot;,
+	
+    &quot;simple&quot;: &quot;「ありがとう」と言った水のpHが変わったっぽい、という話。&quot;,
+	
+    &quot;oneword&quot;: &quot;波動水。&quot;}&gt;&gt;
+&lt;&lt;set $view = &quot;original&quot;&gt;&gt;
+
+&lt;&lt;link &quot;📄 要約&quot;&gt;&gt;&lt;&lt;set $view = &quot;summary&quot;&gt;&gt;&lt;&lt;replace &quot;#content-box&quot;&gt;&gt;&lt;&lt;print $text[$view]&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
+&lt;&lt;link &quot;📝 もっと簡単に&quot;&gt;&gt;&lt;&lt;set $view = &quot;simple&quot;&gt;&gt;&lt;&lt;replace &quot;#content-box&quot;&gt;&gt;&lt;&lt;print $text[$view]&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
+&lt;&lt;link &quot;💬 ひとことで&quot;&gt;&gt;&lt;&lt;set $view = &quot;oneword&quot;&gt;&gt;&lt;&lt;replace &quot;#content-box&quot;&gt;&gt;&lt;&lt;print $text[$view]&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
+&lt;&lt;link &quot;🔙 原文に戻る&quot;&gt;&gt;&lt;&lt;set $view = &quot;original&quot;&gt;&gt;&lt;&lt;replace &quot;#content-box&quot;&gt;&gt;&lt;&lt;print $text[$view]&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+
+&lt;hr&gt;
+
+&lt;div id=&quot;content-box&quot;&gt;
+	&lt;&lt;print $text[$view]&gt;&gt;
+&lt;/div&gt;
+
+
+
+&lt;&lt;set $toggle1 = false&gt;&gt;
+
+&lt;&lt;link &quot;▶ 判断傾向を表示/非表示&quot;&gt;&gt;
+	&lt;&lt;if $toggle1 is false&gt;&gt;
+		&lt;&lt;replace &quot;#summary2&quot;&gt;&gt;
+			●現在、査読中の査読官：1名（あなただけ）
+
+「まぁ、ポテチ論文だし1人でいいだろう」って思われたっぽいですね。
+でもあなたの判断で、食品業界のパッケージが変わるかもしれません。
+		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;set $toggle1 = true&gt;&gt;
+	&lt;&lt;else&gt;&gt;
+		&lt;&lt;replace &quot;#summary2&quot;&gt;&gt;
+			
+		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;set $toggle1 = false&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/link&gt;&gt;
+
+&lt;span id=&quot;summary2&quot;&gt;&lt;/span&gt;
+
+
+&lt;&lt;set $toggle2 = false&gt;&gt;
+
+&lt;&lt;link &quot;▶ AIチェックを表示/非表示&quot;&gt;&gt;
+	&lt;&lt;if $toggle2 is false&gt;&gt;
+		&lt;&lt;replace &quot;#summary3&quot;&gt;&gt;
+			この論文、ポテトチップスで人の心理面やマーケティングを語るという発想には驚かされましたが、実際、高地で膨らんだスナック袋が視覚的に与える“期待値”は無視できません。
+
+“期待空間”という用語も、いわゆる800円カフェの雰囲気料金と近い概念と捉えられます。
+
+結局のところ、「空気に価格がつく」時代は、もう到来しているのかもしれません。
+		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;set $toggle2 = true&gt;&gt;
+	&lt;&lt;else&gt;&gt;
+		&lt;&lt;replace &quot;#summary3&quot;&gt;&gt;
+			
+		&lt;&lt;/replace&gt;&gt;
+		&lt;&lt;set $toggle2 = false&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/link&gt;&gt;
+
+&lt;span id=&quot;summary3&quot;&gt;&lt;/span&gt;
+
+[[判定へ|week01dec]]
+
+
+&lt;script&gt;
+function showZoom(src) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.innerHTML = &quot;&lt;img src=&#39;&quot; + src + &quot;&#39; onclick=&#39;document.body.removeChild(this.parentNode)&#39; /&gt;&quot;;
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;600&quot; onclick=&quot;showZoom(this.src)&quot;&gt;
+
+
+&lt;script&gt;
+function showZoomMulti(sources) {
+  let popup = document.createElement(&quot;div&quot;);
+  popup.id = &quot;zoom-popup&quot;;
+  popup.onclick = () =&gt; document.body.removeChild(popup);
+  popup.innerHTML = sources.map(src =&gt; `&lt;img src=&quot;${src}&quot;&gt;`).join(&#39;&#39;);
+  document.body.appendChild(popup);
+}
+&lt;/script&gt;
+
+&lt;!-- ↓表示されてる小さな画像（サムネ） --&gt;
+&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
+     onclick=&#39;showZoomMulti([&quot;NEUNOARTICL_page-0001.jpg&quot;, &quot;NEUNOARTICL_page-0002.jpg&quot;])&#39;&gt;
 </tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
