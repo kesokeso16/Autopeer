@@ -122,6 +122,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   max-width: 100%;
 }
 
+
 /* ▼ ポップアップ全体 */
 #zoom-popup {
   position: fixed;
@@ -129,26 +130,20 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   width: 100vw;
   height: 100vh;
   background-color: rgba(0,0,0,0.8);
-  overflow: auto;
+  overflow: scroll;     /* ← scrollに統一 */
   z-index: 9999;
   padding: 40px;
 }
+
 
 /* ▼ ポップアップ内の画像 */
 #zoom-popup img {
   display: block;
   margin: 40px auto;
-  max-width: none;  /* 原寸サイズで表示させる */
+  max-width: none;
   box-shadow: 0 0 20px #fff;
-}
-
-ズーム機能
-#zoom-popup {
-  overflow: scroll;
-}
-#zoom-popup img {
-  transform: scale(1.35); /* 1.35倍に拡大 */
-  transform-origin: top center;
+  transform: scale(1.35);          /* ← 1.35倍表示 */
+  transform-origin: top center;    /* ← 拡大起点 */
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on('click', 'a.link-internal', function (event) {
 	const $box = $('#content-box');
@@ -186,20 +181,33 @@ Autopeer&lt;br&gt;
 
 [[進む|briefing]]</tw-passagedata><tw-passagedata pid="2" name="week01check" tags="" position="350,200" size="100,100">🗒️論文001『膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係』
 
-&lt;!-- 拡大ポップアップ用スクリプト --&gt;
+🗒️論文001『膨らんだ袋に詰まった期待：スナック菓子包装における空間認知と購買意欲の関係』
+
+&lt;!-- ✅ 横並びでサムネイル表示 --&gt;
+&lt;div style=&quot;display: flex; gap: 20px;&quot;&gt;
+  &lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
+       onclick=&#39;showZoomSingle(&quot;NEUNOARTICL_page-0001.jpg&quot;)&#39;&gt;
+  &lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0002.jpg&quot; width=&quot;300&quot;
+       onclick=&#39;showZoomSingle(&quot;NEUNOARTICL_page-0002.jpg&quot;)&#39;&gt;
+&lt;/div&gt;
+
+&lt;!-- ✅ 拡大ポップアップ用スクリプト --&gt;
 &lt;script&gt;
-function showZoomMulti(sources) {
-  let popup = document.createElement(&quot;div&quot;);
+function showZoomSingle(src) {
+  const existing = document.getElementById(&quot;zoom-popup&quot;);
+  if (existing) existing.remove();
+
+  const popup = document.createElement(&quot;div&quot;);
   popup.id = &quot;zoom-popup&quot;;
   popup.onclick = () =&gt; document.body.removeChild(popup);
-  popup.innerHTML = sources.map(src =&gt; `&lt;img src=&quot;${src}&quot;&gt;`).join(&#39;&#39;);
+
+  const img = document.createElement(&quot;img&quot;);
+  img.src = src;
+  popup.appendChild(img);
+
   document.body.appendChild(popup);
 }
 &lt;/script&gt;
-
-&lt;!-- 表示用：小さな画像 --&gt;
-&lt;img class=&quot;zoomable-img&quot; src=&quot;NEUNOARTICL_page-0001.jpg&quot; width=&quot;300&quot;
-     onclick=&#39;showZoomMulti([&quot;NEUNOARTICL_page-0001.jpg&quot;, &quot;NEUNOARTICL_page-0002.jpg&quot;])&#39;&gt;
 
 ---
 
