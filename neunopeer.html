@@ -1652,15 +1652,15 @@ window.paperData = {
     summary: &quot;お世話になります。Neuno研究所のミナトです。\n現在、ある論文について緊急の査読をお願いしております。添付ファイルをご確認の上、至急ご対応いただければ幸いです。&quot;
   },
   POPLI: {
-    title: &quot;📣 Neuno研究所 公式投稿&quot;,
-    summary: &quot;#Neuno研究所 新技術開発成功！？\n関係者によると、すでに軍事転用の話も出ている模様。&quot;
+    title: &quot;📣 POPLIChat&quot;,
+    summary: &quot;#マイク&lt;br&gt;hello,my friend&quot;
   },
   Synapse: {
-    title: &quot;🧠 Synapseログ&quot;,
-    summary: &quot;あなたの認知記録がここに蓄積されています。最新の推論エンジンが分析中です。&quot;
+    title: &quot;🧠 Synapse&quot;,
+    summary: &quot;@john_mike&lt;br&gt;OhmyGod&quot;
   },
   NEWSFEED: {
-    title: &quot;📰 ニュースフィード&quot;,
+    title: &quot;📰 NEWSFEED&quot;,
     summary: &quot;最新の論文・投稿・通知をここに表示しています。トレンド：#AI査読 #Neuno研究所&quot;
   },
   PHONE: {
@@ -1668,7 +1668,7 @@ window.paperData = {
     summary: &quot;音声通話の記録：\n03:12 - 通話開始\n03:47 - キーワード『オービタル』が検出されました。&quot;
   },
   ORBITAL: {
-    title: &quot;🛰️ オービタル通信&quot;,
+    title: &quot;🛰️ 検索エンジン&quot;,
     summary: &quot;低軌道上に展開された通信衛星と接続。\nミッションコード：ORBT-X51\n状態：安定&quot;
   },
   CAMERA: {
@@ -1681,66 +1681,63 @@ window.showDialogFromId = function(id) {
   const data = window.paperData[id];
   if (!data) return;
 
+  const overlay = document.createElement(&quot;div&quot;);
+  overlay.style = `
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background:rgba(0,0,0,0.5);
+    z-index:10000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  `;
+
   const dialog = document.createElement(&quot;div&quot;);
   dialog.innerHTML = `
     &lt;div style=&quot;background:#fff;padding:20px;border-radius:12px;max-width:90vw;box-shadow:0 0 20px rgba(0,0,0,0.3);&quot;&gt;
       &lt;h2 style=&quot;margin-top:0;font-size:20px;color:#333;&quot;&gt;${data.title}&lt;/h2&gt;
       &lt;p style=&quot;font-size:16px;white-space:pre-line;color:#555;&quot;&gt;${data.summary}&lt;/p&gt;
       &lt;div style=&quot;text-align:right;margin-top:16px;&quot;&gt;
-        &lt;button onclick=&quot;this.closest(&#39;div&#39;).parentElement.remove()&quot; style=&quot;padding:6px 12px;&quot;&gt;閉じる&lt;/button&gt;
+        &lt;button&gt;閉じる&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   `;
-  dialog.style = `
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    z-index:10000;
-    background:rgba(0,0,0,0.5);
-    padding:30px;
-    border-radius:16px;
-  `;
-  dialog.onclick = e =&gt; {
-    if (e.target === dialog) dialog.remove();
+
+  // ✨ここで「閉じる」ボタンに動作をつける！
+  dialog.querySelector(&quot;button&quot;).onclick = () =&gt; overlay.remove();
+
+  overlay.appendChild(dialog);
+  overlay.onclick = e =&gt; {
+    if (e.target === overlay) overlay.remove();
   };
-  document.body.appendChild(dialog);
+
+  document.body.appendChild(overlay);
 };
+
 &lt;&lt;/script&gt;&gt;
 
 
 
 
-&lt;div style=&quot;position:relative;width:320px;height:400px;border:1px solid #ccc;&quot;&gt;
-  &lt;!-- 背景画像 --&gt;
-  &lt;img src=&quot;spui.png&quot; style=&quot;width:320px;height:400px;position:absolute;top:0;left:0;z-index:1;&quot;&gt;
-  &lt;!-- SVGボタン --&gt;
-&lt;svg width=&quot;1280&quot; height=&quot;720&quot; viewBox=&quot;0 0 1280 720&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-&lt;rect x=&quot;717&quot; y=&quot;129&quot; width=&quot;93&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;OMAIL&#39;)&quot;/&gt;
-&lt;rect x=&quot;473&quot; y=&quot;274&quot; width=&quot;95&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;Synapse&#39;)&quot;/&gt;
-&lt;rect x=&quot;473&quot; y=&quot;129&quot; width=&quot;95&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;POPLI&#39;)&quot;/&gt;
-&lt;rect x=&quot;593&quot; y=&quot;129&quot; width=&quot;94&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;NEWSFEED&#39;)&quot;/&gt;
-&lt;g filter=&quot;url(#filter0_d_3_3)&quot;&gt;
-&lt;rect x=&quot;593&quot; y=&quot;274&quot; width=&quot;94&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;PHONE&#39;)&quot; shape-rendering=&quot;crispEdges&quot;/&gt;
-&lt;/g&gt;
-&lt;rect x=&quot;473&quot; y=&quot;418&quot; width=&quot;95&quot; height=&quot;92&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.9&quot;onclick=&quot;window.showDialogFromId(&#39;ORBITAL&#39;)&quot;/&gt;
-&lt;rect x=&quot;717&quot; y=&quot;274&quot; width=&quot;93&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0.5&quot;onclick=&quot;window.showDialogFromId(&#39;CAMERA&#39;)&quot;/&gt;
-&lt;defs&gt;
-&lt;filter id=&quot;filter0_d_3_3&quot; x=&quot;589&quot; y=&quot;274&quot; width=&quot;102&quot; height=&quot;98&quot; filterUnits=&quot;userSpaceOnUse&quot; color-interpolation-filters=&quot;sRGB&quot;&gt;
-&lt;feFlood flood-opacity=&quot;0&quot; result=&quot;BackgroundImageFix&quot;/&gt;
-&lt;feColorMatrix in=&quot;SourceAlpha&quot; type=&quot;matrix&quot; values=&quot;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0&quot; result=&quot;hardAlpha&quot;/&gt;
-&lt;feOffset dy=&quot;4&quot;/&gt;
-&lt;feGaussianBlur stdDeviation=&quot;2&quot;/&gt;
-&lt;feComposite in2=&quot;hardAlpha&quot; operator=&quot;out&quot;/&gt;
-&lt;feColorMatrix type=&quot;matrix&quot; values=&quot;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0&quot;/&gt;
-&lt;feBlend mode=&quot;normal&quot; in2=&quot;BackgroundImageFix&quot; result=&quot;effect1_dropShadow_3_3&quot;/&gt;
-&lt;feBlend mode=&quot;normal&quot; in=&quot;SourceGraphic&quot; in2=&quot;effect1_dropShadow_3_3&quot; result=&quot;shape&quot;/&gt;
-&lt;/filter&gt;
-&lt;/defs&gt;
-&lt;/svg&gt;
+&lt;div style=&quot;position:relative;width:1280px;height:720px;&quot;&gt;
+  &lt;!-- 背景 --&gt;
+  &lt;img src=&quot;spui.png&quot; style=&quot;width:1280px;height:720px;position:absolute;top:0;left:0;z-index:1;&quot;&gt;
+  
+  &lt;!-- クリック判定SVG --&gt;
+  &lt;svg width=&quot;1280&quot; height=&quot;720&quot; viewBox=&quot;0 0 1280 720&quot; style=&quot;position:absolute;top:0;left:0;z-index:2;&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+&lt;rect x=&quot;717&quot; y=&quot;129&quot; width=&quot;93&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;POPLI&#39;)&quot;/&gt;
+&lt;rect x=&quot;473&quot; y=&quot;274&quot; width=&quot;95&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;PHONE&#39;)&quot;/&gt;
+&lt;rect x=&quot;473&quot; y=&quot;129&quot; width=&quot;95&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;OMAIL&#39;)&quot;/&gt;
+&lt;rect x=&quot;593&quot; y=&quot;129&quot; width=&quot;94&quot; height=&quot;91&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;Synapse&#39;)&quot;/&gt;
+&lt;rect x=&quot;593&quot; y=&quot;274&quot; width=&quot;94&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;ORBITAL&#39;)&quot;/&gt;
+&lt;rect x=&quot;473&quot; y=&quot;418&quot; width=&quot;95&quot; height=&quot;92&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;CAMERA&#39;)&quot;/&gt;
+&lt;rect x=&quot;717&quot; y=&quot;274&quot; width=&quot;93&quot; height=&quot;90&quot; fill=&quot;#D9D9D9&quot; fill-opacity=&quot;0&quot;onclick=&quot;window.showDialogFromId(&#39;NEWSFEED&#39;)&quot;/&gt;
 
 
-
+  &lt;/svg&gt;
 &lt;/div&gt;
 </tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
